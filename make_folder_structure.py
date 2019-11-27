@@ -17,7 +17,7 @@ for day in range(1,26):
     try:
         os.mkdir(subfoldername)
     except FileExistsError:
-        print(f'{folder_name} already existed')
+        print(f'{subfoldername} already existed')
 
-    copyfile('michael_template.py',f'{folder_name}{os.sep}michael{os.sep}solution.py')
+    copyfile('michael_template.py',f'{subfoldername}{os.sep}solution.py')
 
