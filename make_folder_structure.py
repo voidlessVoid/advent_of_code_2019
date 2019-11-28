@@ -12,7 +12,7 @@ for day in range(1,26):
     except FileExistsError:
         print(f'{folder_name} already existed')
 
-    subfoldername = f'{folder_name}{os.sep}michael'
+    subfoldername = f'{folder_name}{os.sep}mischa'
 
     try:
         os.mkdir(subfoldername)
