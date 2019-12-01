@@ -37,5 +37,13 @@ def part_b():
 
     print(sum([get_fuel(float(x)) for x in read_input_lines()]))
 
+def part_b_recursive():
+    def get_fuel(x):
+        ans = int(x/3)-2
+        if ans < 1:
+            return 0
+        return ans + get_fuel(ans)
 
-part_b()
+    print(sum([get_fuel(float(x)) for x in read_input_lines()]))
+
+part_b_recursive()
