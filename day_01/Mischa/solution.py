@@ -11,7 +11,7 @@ def part_2(inp,fuel):
     f = [x // 3 - 2 for x in inp if x > 8]
     f1 = sum(f)
     fuel += sum(f)
-    if len(inp)*8 < f1:
+    if max(f) > 8:
         return part_2(f,fuel)
     else:
         return f,fuel
