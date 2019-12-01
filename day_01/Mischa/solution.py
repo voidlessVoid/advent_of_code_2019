@@ -1,29 +1,18 @@
-import os
-import sys
-import pandas as pd
-import numpy as np
-import math
-import datetime
-import operator
-from copy import deepcopy
-from collections import Counter, ChainMap, defaultdict, deque
-from itertools import cycle
-from functools import reduce
+data = open('day01_input.txt')
+lines = data.readlines()
+lines1 = [int(x.strip()) for x in lines]
+def part_1(inp):
+    f = sum([x//3-2 for x in inp if x > 8])
+    return f
+print(part_1(lines1))
 
-CURRENT_DIRECTORY = os.path.dirname(__file__)
-os.chdir(CURRENT_DIRECTORY)
-
-def read_input_lines():
-    with open('input.txt', 'r') as fh:
-        return [x.strip() for x in fh.readlines()]
-
-def read_input_text():
-    with open('input.txt', 'r') as fh:
-        return fh.read().strip()
-
-
-def part_a():
-    pass
-
-def part_b():
-    pass
+fuel=0
+def part_2(inp,fuel):
+    f = [x // 3 - 2 for x in inp if x > 8]
+    f1 = sum(f)
+    fuel += sum(f)
+    if len(inp)*8 < f1:
+        return part_2(f,fuel)
+    else:
+        return f,fuel
+print(part_2(lines1,fuel))
