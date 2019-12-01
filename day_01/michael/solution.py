@@ -23,7 +23,19 @@ def read_input_text():
 
 
 def part_a():
-    pass
+    print(sum([int(float(x)/3) -2 for x in read_input_lines()]))
 
 def part_b():
-    pass
+    def get_fuel(x):
+        fuel = 0
+        while True:
+            x = int(x/3)-2
+            if x < 1:
+                break
+            fuel += x
+        return fuel
+
+    print(sum([get_fuel(float(x)) for x in read_input_lines()]))
+
+
+part_b()
