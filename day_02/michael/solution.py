@@ -23,7 +23,37 @@ def read_input_text():
 
 
 def part_a():
-    pass
+    int2fuc = {1: operator.add, 2: operator.mul}
+    opcodes = [int(x.strip()) for x in read_input_text().split(",")]
+    i = 0
+    opcodes[1, 2] = 12 , 2
+    while opcodes[i] != 99:
+        a,b,c,d = opcodes[i:i+4]
+        opcodes[d] = int2fuc[a](opcodes[c],opcodes[b])
+        i+=4
+
+    print(opcodes[0])
 
 def part_b():
-    pass
+    def get_function():
+        opcodes = [int(x.strip()) for x in read_input_text().split(",")]
+        int2fuc = {1: operator.add, 2: operator.mul}
+        num2symbol = {1:'+', 2:'*'}
+        funclist = deepcopy(opcodes)
+        funclist[1] = "a"
+        funclist[2] = "b"
+        i=0
+        opcodes[1] = 12
+        opcodes[2] = 2
+        while opcodes[i] != 99:
+            a, b, c, d = opcodes[i:i + 4]
+            opcodes[d] = int2fuc[a](opcodes[c], opcodes[b])
+            funclist[d] = f"({funclist[b]} {num2symbol[a]} {funclist[c]})"
+            i += 4
+        print(funclist[0])
+        #(3 + ((1 + (3 * (1 + ((3 + (3 + (5 * (2 * (4 + ((5 * (1 + ((5 * (1 + (2 * ((4 * ((((2 + (5 + (2 + (a * 4)))) + 4) + 2) + 5)) + 2)))) * 3))) + 1)))))) * 3)))) + b))
+        # wolfram alpha -> b = 18576009 - 216000 a
+        # a = 86, b= 9
+    get_function()
+
+part_b()
