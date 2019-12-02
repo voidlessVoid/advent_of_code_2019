@@ -26,7 +26,7 @@ def part_a():
     int2fuc = {1: operator.add, 2: operator.mul}
     opcodes = [int(x.strip()) for x in read_input_text().split(",")]
     i = 0
-    opcodes[1, 2] = 12 , 2
+    opcodes[1],opcodes[2] = 12 , 2
     while opcodes[i] != 99:
         a,b,c,d = opcodes[i:i+4]
         opcodes[d] = int2fuc[a](opcodes[c],opcodes[b])
@@ -56,4 +56,20 @@ def part_b():
         # a = 86, b= 9
     get_function()
 
-part_b()
+def part_b_proper():
+    def solve_one(a,b):
+        int2fuc = {1: operator.add, 2: operator.mul}
+        opcodes = [int(x.strip()) for x in read_input_text().split(",")]
+        i = 0
+        opcodes[1],opcodes[2] = a , b
+        while opcodes[i] != 99:
+            a,b,c,d = opcodes[i:i+4]
+            opcodes[d] = int2fuc[a](opcodes[c],opcodes[b])
+            i+=4
+
+        return opcodes[0]
+    possible_answers = ((a,b) for a in range(100) for b in range(100))
+    answer = next(x for x in possible_answers if solve_one(*x) == 19690720)
+    print(answer[0]*100 + answer[1])
+
+part_b_proper()
