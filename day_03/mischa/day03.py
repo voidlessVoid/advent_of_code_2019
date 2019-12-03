@@ -45,7 +45,7 @@ def make_path(inp):
         steps_total += 1
     return path_coords,path_coord_list
 '''
-takes the collisions from step 1 and counts the steps for 1 wire until it reaches every collision point
+takes the collisions from part 1 and counts the steps for 1 wire until it reaches every collision point
 '''
 def make_path_steps(inp, collisions):
     path_coords = set()
