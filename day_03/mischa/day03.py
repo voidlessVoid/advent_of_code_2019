@@ -96,7 +96,7 @@ def make_path_steps(inp, collisions):
     return  steps_to_collision
 
 '''
-gets manhattan distance from (0,0)
+gets manhattan distance from (0,0) for a given list of coords and returns the minimum
 '''
 def get_distance(inp):
     distances = []
