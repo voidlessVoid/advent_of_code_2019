@@ -54,3 +54,16 @@ def part_b():
     mi, ma = 278384, 824795
     print(len([x for x in range(mi, ma + 1) if valid(x)]))
 part_b()
+
+def part_b_shorter():
+    import re #missed this import somehow
+    def valid(x):
+        t = str(x)
+        order = t == ''.join(sorted(t))
+        len2 = any(len(chunk[0]) == 2 for chunk in re.findall(r'((.)\2+)',t))
+        return order and len2
+
+    mi, ma = 278384, 824795
+    print(len([x for x in range(mi, ma + 1) if valid(x)]))
+
+part_b_shorter()
