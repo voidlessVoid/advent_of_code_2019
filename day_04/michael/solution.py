@@ -23,7 +23,47 @@ def read_input_text():
 
 
 def part_a():
-    pass
+    def valid(x):
+        t = str(x)
+        pair = any(t[i] == t[i+1] for i in range(len(t)-1))
+        order = t == ''.join(sorted(t))
+        return pair and order
+    mi,ma = 278384,824795
+    print(len([x for x in range(mi, ma+1) if valid(x)]))
+#part_a()
 
 def part_b():
-    pass
+    def valid(x):
+        t = str(x)
+        order = t == ''.join(sorted(t))
+
+        countlist=[]
+        lastchar = ''
+        count = 0
+        for char in t:
+            if char == lastchar:
+                count+=1
+            else:
+                countlist.append(count)
+                lastchar = char
+                count = 1
+        countlist.append(count)
+
+        return order and 2 in countlist
+
+    mi, ma = 278384, 824795
+    print(len([x for x in range(mi, ma + 1) if valid(x)]))
+part_b()
+
+def part_b_shorter():
+    import re #missed this import somehow
+    def valid(x):
+        t = str(x)
+        order = t == ''.join(sorted(t))
+        len2 = any(len(chunk[0]) == 2 for chunk in re.findall(r'((.)\2+)',t))
+        return order and len2
+
+    mi, ma = 278384, 824795
+    print(len([x for x in range(mi, ma + 1) if valid(x)]))
+
+part_b_shorter()
