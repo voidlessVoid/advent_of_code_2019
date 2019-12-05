@@ -52,13 +52,13 @@ def output_search(required_output = 19690720, list_input = None, outputposition 
 
 	import random as rn # to generate random numbers
 
-	input, output = int_comp(list_input = list_input)['in'], int_comp(list_input = list_input)['out'][outputposition] # predefinition of in and output
+	ls_input, output = int_comp(list_input = list_input)['in'], int_comp(list_input = list_input)['out'][outputposition] # predefinition of in and output
 
 	while output != required_output: # while the output is unequal to required_output rerun output calculation with randomized integern values for noun and verb
 
 		noun, verb = rn.randint(0,99), rn.randint(0,99) # randomize integer in between 0,99
-		input[1], input[2] = noun, verb # replace input keys by noun and verb
-		output = int_comp(list_input = input)['out'][outputposition] # recalculate output
+		ls_input[1], ls_input[2] = noun, verb # replace input keys by noun and verb
+		output = int_comp(list_input = ls_input)['out'][outputposition] # recalculate output
 		print(100*noun+verb) # required answer
 
 output_search(list_input=ls)
