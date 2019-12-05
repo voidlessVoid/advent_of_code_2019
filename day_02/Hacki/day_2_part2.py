@@ -27,13 +27,6 @@ for line in ls.readlines():
 	ls = line.rstrip().split(',')
 	ls = [int(i) for i in ls]
 
-noun = 12
-verb = 2
-
-ls[1] = noun
-ls[2] = verb
-
-
 def int_comp(list_input = None, exit_instruction = 99, instruction_pointer = 0):
 
 	if list_input is None:
