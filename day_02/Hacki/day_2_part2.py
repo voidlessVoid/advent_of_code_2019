@@ -58,7 +58,6 @@ def output_search(required_output = 19690720, list_input = None, outputposition 
 
 		noun, verb = rn.randint(0,99), rn.randint(0,99) # randomize integer in between 0,99
 		ls_input[1], ls_input[2] = noun, verb # replace input keys by noun and verb
-		output = int_comp(list_input = ls_input)['out'][outputposition] # recalculate output
-		print(100*noun+verb) # required answer
+		return print(100*noun+verb) # required answer
 
 output_search(list_input=ls)
