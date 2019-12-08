@@ -1,4 +1,5 @@
 import os
+from collections import deque
 from itertools import permutations
 
 CURRENT_DIRECTORY = os.path.dirname(__file__)
@@ -26,9 +27,9 @@ class opcode_machine():
 
     def  __init__(self,codelist,inp):
         self.codelist = codelist
-        self.inp = inp
+        self.inp = deque(inp)
         self.i=0
-        self.outputlist = []
+        self.outputlist = deque()
         self.mode2value = {
            1 : lambda x: x,
            0 : lambda x: self.codelist[x]}
@@ -112,16 +113,16 @@ class opcode_machine():
     def __repr__(self):
         return f'intcode machine number {self.instancenumber} is extremely happy to be alive!'
 
-def part_a():
+def part_a(): # using a recursive function!
     def opt_signal(input_signal,possible_phase_settings):
         best = -float('inf')
-        if not possible_phase_settings:
+        if not possible_phase_settings: # we return the output from the 5th machine
             return input_signal
-        for setting in possible_phase_settings:
+        for setting in possible_phase_settings: # possible code settings = a dict of codes not yet used
             codes = [int(x) for x in read_input_text().split(',')]
             machine = opcode_machine(codes, [input_signal, setting])
             machine.run()
-            next_stage_signal = machine.outputlist[-1]
+            next_stage_signal = machine.outputlist.pop()
             final_signal = opt_signal(next_stage_signal,possible_phase_settings-{setting})
             if final_signal > best:
                 best = final_signal
@@ -134,12 +135,10 @@ def part_b():
     codes = [int(x) for x in read_input_text().split(',')]
     best = -float('inf')
     for setting_map in (permutations(range(5,10))):
-        machines = [opcode_machine(codes[::], []) for x in range(5)]
+        machines = [opcode_machine(codes[::], [setting_map[x]]) for x in range(5)]
         output_signals = [0] * 5
         active_machine = 0
-        for setting, machine in zip(setting_map,machines):
-            machine.inp = [setting]
-        machines[active_machine].inp = [0] + machines[active_machine].inp
+        machines[active_machine].inp.appendleft(0)
 
         while True:
             hit_99 = machines[active_machine].run()
@@ -147,9 +146,9 @@ def part_b():
                 break
             else:
                 next_active_machine = (active_machine + 1) % 5
-                machines[next_active_machine].inp =machines[active_machine].outputlist + machines[next_active_machine].inp
-                output_signals[active_machine] = machines[active_machine].outputlist[-1]
-                machines[active_machine].outputlist = []
+                output_signal = machines[active_machine].outputlist.pop()
+                machines[next_active_machine].inp.appendleft(output_signal)
+                output_signals[active_machine] = output_signal
                 active_machine = next_active_machine
 
         if output_signals[4] > best:
