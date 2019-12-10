@@ -15,7 +15,6 @@ def read_input_text():
 
 
 def part_a():
-
     map = read_input_lines()
     coords = {(i,j) for i in range(len(map)) for j in range(len(map[i]))}
     coords = {(i,j) for i, j in coords if map[i][j]=='#'}
@@ -29,24 +28,18 @@ def part_a():
             try:
                 dydx = dy/dx
             except ZeroDivisionError:
-                if dy < 0:
-                    dydx = -float('inf')
-                else:
-                    dydx = float('inf')
+                dydx = np.sign(dy) * float('inf')
             dir_set.add((dydx,np.sign(dx)))
-        if len(dir_set) > best:
-            best = len(dir_set)
+        best = max([len(dir_set), best])
     print(best)
 
 part_a()
 
 def part_b():
-    """ order = dydx -Inf -> inf positive dx, -Inf -> inf negative dx"""
     center = (25, 22)
-
     map = read_input_lines()
     coords = {(i,j) for i in range(len(map)) for j in range(len(map[i]))}
-    coords = {(i,j) for i, j in coords if map[i][j]=='#'}
+    coords = {(i,j) for i, j in coords if map[i][j] == '#'}
 
     astroid_dir_dict = defaultdict(list)
     for coord in coords - {center}:
@@ -55,10 +48,8 @@ def part_b():
         try:
             dydx = dy / dx
         except ZeroDivisionError:
-            if dy < 0:
-                dydx = -float('inf')
-            else:
-                dydx = float('inf')
+            dydx = np.sign(dy) * float('inf')
+
         astroid_dir_dict[(-np.sign(dx) or -1,dydx)].append(coord)
 
     for dir in astroid_dir_dict:
@@ -66,14 +57,12 @@ def part_b():
 
     sorted_dirs = sorted(astroid_dir_dict.keys())
     sorted_dirs_queue = deque(sorted_dirs)
-    i = 0
-    while sorted_dirs_queue:
+    for i in range(200):
         next_dir = sorted_dirs_queue.popleft()
         next_astroid = astroid_dir_dict[next_dir].pop()
         if astroid_dir_dict[next_dir]:
             sorted_dirs_queue.append(next_dir)
-        i+=1
-        if i == 200:
-            print(100 *next_astroid[1]  + next_astroid[0])
+
+    print(100 *next_astroid[1]  + next_astroid[0])
 
 part_b()
