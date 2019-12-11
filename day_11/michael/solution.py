@@ -1,14 +1,6 @@
 import os
-import sys
-import pandas as pd
-import numpy as np
-import math
-import datetime
-import operator
-from copy import deepcopy
-from collections import Counter, ChainMap, defaultdict, deque
-from itertools import cycle
-from functools import reduce
+from collections import defaultdict, deque
+
 
 CURRENT_DIRECTORY = os.path.dirname(__file__)
 os.chdir(CURRENT_DIRECTORY)
@@ -114,10 +106,8 @@ class opcode_machine():
         b = self.get(values[1], modes.pop())
         c = self.get_literal(values[2], modes.pop())
         if  a == b:
-            #put(get(values[2], modes.pop(0)), 1)
             self.put(c,1)
         else:
-            #put(get(values[2], modes.pop(0)), 0)
             self.put(c,0)
 
     def ARB(self,values,modes): # ajust relative base
@@ -142,12 +132,13 @@ class opcode_machine():
 def part_a():
     c = read_input_text()
     code = [int(x) for x in c.split(',')]
-    machine = opcode_machine(code,[0]) #first piece is always black
+    machine = opcode_machine(code,[])
     colordict=defaultdict(int)
     coords = 0
     dirs = {"U": -1, "D":1,"L": -(1j), "R": 1j}
     dirlist=deque(["U","R","D","L"])
     while True:
+        machine.inp.appendleft(colordict[coords])
         for expected_output in range(2):
             halt = machine.run() # get first output
             if halt:
@@ -160,7 +151,7 @@ def part_a():
         dirlist.rotate({0:1,1:-1}[b])
         delta = dirs[dirlist[0]]
         coords+=delta
-        machine.inp.appendleft(colordict[coords])
+
     print(len(colordict))
 
 
@@ -169,13 +160,14 @@ part_a()
 def part_b():
     c = read_input_text()
     code = [int(x) for x in c.split(',')]
-    machine = opcode_machine(code,[1]) #first piece is always white
+    machine = opcode_machine(code,[]) #first piece is always white
     colordict=defaultdict(int)
     colordict[0] = 1
     coords = 0
     dirs = {"U": -1, "D":1,"L": -(1j), "R": 1j}
     dirlist=deque(["U","R","D","L"])
     while True:
+        machine.inp.appendleft(colordict[coords])
         for expected_output in range(2):
             halt = machine.run() # get first output
             if halt:
@@ -188,7 +180,7 @@ def part_b():
         dirlist.rotate({0:1,1:-1}[b])
         delta = dirs[dirlist[0]]
         coords+=delta
-        machine.inp.appendleft(colordict[coords])
+
 
 
     min_real = int(min (x.real for x in colordict))
