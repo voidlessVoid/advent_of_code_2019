@@ -140,7 +140,7 @@ def part_a():
     while True:
         machine.inp.appendleft(colordict[coords])
         for expected_output in range(2):
-            halt = machine.run() # get first output
+            halt = machine.run()
             if halt:
                 break
         if halt:
@@ -160,7 +160,7 @@ part_a()
 def part_b():
     c = read_input_text()
     code = [int(x) for x in c.split(',')]
-    machine = opcode_machine(code,[]) #first piece is always white
+    machine = opcode_machine(code,[])
     colordict=defaultdict(int)
     colordict[0] = 1
     coords = 0
@@ -169,7 +169,7 @@ def part_b():
     while True:
         machine.inp.appendleft(colordict[coords])
         for expected_output in range(2):
-            halt = machine.run() # get first output
+            halt = machine.run()
             if halt:
                 break
         if halt:
