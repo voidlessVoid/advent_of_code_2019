@@ -151,8 +151,7 @@ def part_a():
     code = [int(x) for x in read_input_text().split(",")]
     tasklist = [(0,opcode_machine(code,[]))]
 
-    found = False
-    while not found:
+    while True:
         next_tasklist = []
         for loc, machine in tasklist:
             for command, dir in DIRDICT.items():
@@ -164,8 +163,8 @@ def part_a():
                     if response == 0:
                         distdict[loc+dir] = 'inf'
                     elif response == 2:
-                        print(f"answer = {distdict[loc]+1}")
-                        found = True
+                        print(f"answer part a = {distdict[loc]+1}")
+                        return (loc+dir,copy)
                     else:
                         next_tasklist.append((loc+dir,copy))
                         distdict[loc+dir] = distdict[loc] + 1
@@ -174,30 +173,9 @@ def part_a():
 #part_a()
 
 def part_b():
+    # we could construct a map for part a and then solve it using the map but using the machines is more fun!
     DIRDICT = {1:-1, 2:1, 3:-1j,4:1j}
-    distdict = {0:0}
-    code = [int(x) for x in read_input_text().split(",")]
-    tasklist = [(0,opcode_machine(code,[]))]
-
-    O_loc = None
-    while not O_loc:
-        next_tasklist = []
-        for loc, machine in tasklist:
-            for command, dir in DIRDICT.items():
-                if loc + dir not in distdict: # not visited
-                    copy = machine.return_copy()
-                    copy.inp = deque([command])
-                    copy.run()
-                    response = copy.outputlist.pop()
-                    if response != 0:
-                        if response == 2:
-                            print(f"answer = {distdict[loc]+1}")
-                            O_loc = (loc+dir, copy)
-                        else:
-                            next_tasklist.append((loc+dir,copy))
-                            distdict[loc+dir] = distdict[loc] + 1
-        tasklist = next_tasklist
-
+    O_loc = part_a()
     distdict = {O_loc[0]:0}
     tasklist = [O_loc]
     while tasklist:
@@ -214,6 +192,6 @@ def part_b():
                         distdict[loc+dir] = distdict[loc] + 1
         tasklist = next_tasklist
 
-    print(max(distdict.values()))
+    print(f'answer part b = {max(distdict.values())}')
 
 part_b()
