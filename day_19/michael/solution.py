@@ -158,36 +158,32 @@ def part_a():
 #part_a()
 
 def part_b():
+
+    def get_coord(x,y):
+        machine = opcode_machine(code, [y,x])
+        machine.run()
+        return machine.outputlist.pop()
+
     code = [int(x) for x in read_input_text().split(",")]
-    top = []
-    bottem = []
-    for x in range(50):
-        last = 0
-        for y in range(50):
-            machine = opcode_machine(code, [y,x])
-            machine.run()
-            out = machine.outputlist.pop()
-            if (out == 1) and (last == 0):
-                top.append(y)
-            elif (last == 1) and (out == 0):
-                bottem.append(y-1)
-            last = out
-    print(top)
-    print(bottem)
+    ypos = 0 # upper left corner
+    xpos = 0
 
-    for array in [top,bottem]:
-        print([array[i+1] - array[i] for i in range(1,len(array)-1)])
-        # top follows 1,1,1,0 ...
-        # bottem follows 1,1,1,0, 8 * 1, 0, 8*1, 0 ...
+    while True:
+        lower_left = get_coord(xpos,ypos+99)
+        upper_right = get_coord(xpos+99,ypos)
+        if lower_left and upper_right:
+            break
+        if not lower_left:
+            xpos+=1
+        elif not upper_right:
+            ypos+=1
+    print(xpos*10000+ypos)
 
-    def gen_pattern(start,delta_pattern,start_index_delta, n):
-        out = [start]
-        for i in range(n):
-            out.append(out[-1] + delta_pattern[(start_index_delta+i)%len(delta_pattern)])
-        return out
 
-    top = [0] + gen_pattern(4,[1,1,1,0],0,100000)
-    bottem = [0] + gen_pattern(4,[1]*8 +[0],5,100000)
+
 
 
 part_b()
+
+
+
