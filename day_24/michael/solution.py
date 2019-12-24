@@ -50,16 +50,10 @@ def part_a():
         bugs = nextbugs
 
 
-
-
-
-
-
 def part_b():
-
     DIRS = {-1,1,1j,-1j}
 
-    def get_mapping():
+    def get_mapping(): # dict loc -> (loc, delta_level)
         def get_inner_interface(dir):
             return (2 + 2j) + dir
 
