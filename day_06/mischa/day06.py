@@ -80,6 +80,5 @@ print('part1: ',part_1(lines1))
 '''
 part 2
 '''
-
 print('part2: ',part_2(lines1))
 #343
