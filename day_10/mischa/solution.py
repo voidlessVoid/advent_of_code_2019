@@ -54,8 +54,7 @@ def part_a(input_list):
     return max(list_of_detectable_ast), target_ast, dict_of_ast[target_ast], dict_of_angles_of_target_ast
 answer_A, Laser_asteroid,coords_of_LaAst, dict_of_angles_of_LaserAsteroid = part_a(inp)
 
-print('answer part A: ',answer_A)
-#answer part A:221
+
 
 
 def part_b(dict_of_angles_of_LaserAsteroid, dict_of_ast, LaserAsteroid_coords, LaserAsteroid):
@@ -142,5 +141,8 @@ def part_b(dict_of_angles_of_LaserAsteroid, dict_of_ast, LaserAsteroid_coords, L
     twohundredAst = (destroyd_asteroids_coords[-1])
     answer = destroyd_asteroids_coords[-1][0]*100+destroyd_asteroids_coords[-1][1]
     return answer
+
+print('answer part A: ',answer_A)
+#answer part A:221
 answer_B = part_b(dict_of_angles_of_LaserAsteroid,dict_of_ast,coords_of_LaAst,Laser_asteroid)
 print('answer part B: ',answer_B)
