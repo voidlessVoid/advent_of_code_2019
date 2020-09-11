@@ -76,9 +76,9 @@ def part_2(inp1):
 part 1
 '''
 print('part1: ',part_1(lines1))
-
+#part1:  110190
 '''
 part 2
 '''
 print('part2: ',part_2(lines1))
-#343
+#part2:  343
